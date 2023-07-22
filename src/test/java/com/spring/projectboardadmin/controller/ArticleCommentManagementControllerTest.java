@@ -1,7 +1,6 @@
 package com.spring.projectboardadmin.controller;
 
 import com.spring.projectboardadmin.config.SecurityConfig;
-import com.spring.projectboardadmin.domain.constant.RoleType;
 import com.spring.projectboardadmin.dto.ArticleCommentDto;
 import com.spring.projectboardadmin.dto.UserAccountDto;
 import com.spring.projectboardadmin.service.ArticleCommentManagementService;
@@ -16,9 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -67,7 +64,7 @@ class ArticleCommentManagementControllerTest {
         then(articleCommentManagementService).should().getArticleComment(articleCommentId);
     }
 
-    @DisplayName("[view][GET] 댓글 삭제 - 정상 호출")
+    @DisplayName("[view][POST] 댓글 삭제 - 정상 호출")
     @Test
     void deleteArticleComment() throws Exception {
         // Given
@@ -101,7 +98,6 @@ class ArticleCommentManagementControllerTest {
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
                 "unoTest",
-                Set.of(RoleType.ADMIN),
                 "uno-test@email.com",
                 "uno-test",
                 "test memo"
