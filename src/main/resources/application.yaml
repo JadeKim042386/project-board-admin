@@ -1,6 +1,4 @@
-# global debug
 debug: false
-# for actuator
 management.endpoints.web.exposure.include: "*"
 
 server.port: 8081
@@ -8,8 +6,9 @@ server.port: 8081
 logging:
   level:
     com.spring.projectboard: debug
-    org.springframework.web.servlet: debug # response, request debug ? ?? ??
-    org.hibernate.type.descriptor.sql.BasicBinder: trace # jpa ??? query debug ? ?? ??
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.springframework.web.client.RestTemplate: debug
 
 spring:
   devtools.livereload.port: 35730
@@ -19,12 +18,12 @@ spring:
     password: ${LOCAL_DB_PASSWORD}
   jpa:
     open-in-view: false
-    defer-datasource-initialization: true # test? ??? *.sql? ??? ? ?? ?
-    hibernate.ddl-auto: create # ???? DDL?? ???? table? ??
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create
     show-sql: true
     properties:
-      hibernate.format_sql: true # formatting
-      hibernate.default_batch_fetch_size: 100 #
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
   h2.console.enabled: false # default=false
   sql.init.mode: always
   data.rest:
@@ -36,24 +35,20 @@ spring:
       client:
         registration:
           kakao:
-            # REST API ?
             client-id: ${KAKAO_OAUTH_CLIENT_ID}
-            # ?? > Client Secret ??
             client-secret: ${KAKAO_OAUTH_CLIENT_SECRET}
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             client-authentication-method: POST
         provider:
           kakao:
-            # https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-code
             authorization-uri: https://kauth.kakao.com/oauth/authorize
-            # https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
             token-uri: https://kauth.kakao.com/oauth/token
-            # https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#req-user-info
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
 springdoc.swagger-ui.path: /swagger-ui
+project.board.url: http://localhost:8080
 
 ---
 
