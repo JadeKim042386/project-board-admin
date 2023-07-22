@@ -41,7 +41,8 @@ class ArticleCommentManagementServiceTest {
     class RealApiTest {
         private final ArticleCommentManagementService sut;
 
-        public RealApiTest(@Autowired ArticleCommentManagementService sut) {
+        @Autowired
+        public RealApiTest(ArticleCommentManagementService sut) {
             this.sut = sut;
         }
 
@@ -61,7 +62,7 @@ class ArticleCommentManagementServiceTest {
     @DisplayName("API mocking 테스트")
     @EnableConfigurationProperties(ProjectProperties.class)
     @AutoConfigureWebClient(registerRestTemplate = true)
-    @RestClientTest(ArticleManagementService.class)
+    @RestClientTest(ArticleCommentManagementService.class)
     @Nested
     class restTemplateTest {
         private final ArticleCommentManagementService sut;
@@ -69,6 +70,7 @@ class ArticleCommentManagementServiceTest {
         private final MockRestServiceServer server;
         private final ObjectMapper mapper;
 
+        @Autowired
         public restTemplateTest(
                 ArticleCommentManagementService sut,
                 ProjectProperties projectProperties,
@@ -157,7 +159,6 @@ class ArticleCommentManagementServiceTest {
         private UserAccountDto createUserAccountDto() {
             return UserAccountDto.of(
                     "unoTest",
-                    "pw",
                     Set.of(RoleType.ADMIN),
                     "uno-test@email.com",
                     "uno-test",
