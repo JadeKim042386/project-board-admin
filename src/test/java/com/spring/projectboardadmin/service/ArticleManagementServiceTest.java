@@ -41,7 +41,8 @@ class ArticleManagementServiceTest {
     class RealApiTest {
         private final ArticleManagementService sut;
 
-        public RealApiTest(@Autowired ArticleManagementService sut) {
+        @Autowired
+        public RealApiTest(ArticleManagementService sut) {
             this.sut = sut;
         }
 
@@ -57,7 +58,7 @@ class ArticleManagementServiceTest {
             assertThat(result).isNotNull();
         }
     }
-}
+
 
     @DisplayName("API mocking 테스트")
     @EnableConfigurationProperties(ProjectProperties.class)
@@ -70,6 +71,7 @@ class ArticleManagementServiceTest {
         private final MockRestServiceServer server;
         private final ObjectMapper mapper;
 
+        @Autowired
         public restTemplateTest(
                 ArticleManagementService sut,
                 ProjectProperties projectProperties,
@@ -161,7 +163,6 @@ class ArticleManagementServiceTest {
         private UserAccountDto createUserAccountDto() {
             return UserAccountDto.of(
                     "unoTest",
-                    "pw",
                     Set.of(RoleType.ADMIN),
                     "uno-test@email.com",
                     "uno-test",
