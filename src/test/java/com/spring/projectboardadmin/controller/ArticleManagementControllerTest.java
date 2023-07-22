@@ -69,7 +69,7 @@ class ArticleManagementControllerTest {
         then(articleManagementService).should().getArticle(articleIndex, pageNumber);
     }
 
-    @DisplayName("[view][GET] 게시글 삭제 - 정상 호출")
+    @DisplayName("[view][POST] 게시글 삭제 - 정상 호출")
     @Test
     void deleteArticle() throws Exception {
         // Given
@@ -103,7 +103,6 @@ class ArticleManagementControllerTest {
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
                 "unoTest",
-                Set.of(RoleType.ADMIN),
                 "uno-test@email.com",
                 "uno-test",
                 "test memo"
