@@ -3,10 +3,10 @@ package com.spring.projectboardadmin.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.projectboardadmin.domain.constant.RoleType;
-import com.spring.projectboardadmin.dto.ArticleDto;
+import com.spring.projectboardadmin.dto.ArticleCommentDto;
 import com.spring.projectboardadmin.dto.UserAccountDto;
 import com.spring.projectboardadmin.dto.properties.ProjectProperties;
-import com.spring.projectboardadmin.dto.response.ArticleClientResponse;
+import com.spring.projectboardadmin.dto.response.ArticleCommentClientResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -31,61 +31,60 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 @ActiveProfiles("test")
-@DisplayName("비지니스 로직 - 게시글 관리")
-class ArticleManagementServiceTest {
+@DisplayName("비지니스 로직 - 댓글 관리")
+class ArticleCommentManagementServiceTest {
 
     @Disabled("실제 API 호출 결과 확인용")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
     class RealApiTest {
-        private final ArticleManagementService sut;
+        private final ArticleCommentManagementService sut;
 
         @Autowired
-        public RealApiTest(ArticleManagementService sut) {
+        public RealApiTest(ArticleCommentManagementService sut) {
             this.sut = sut;
         }
 
-        @DisplayName("게시글 목록 호출 실제 API")
+        @DisplayName("댓글 목록 호출 실제 API")
         @Test
-        void callingArticlesRealApi() {
+        void callingArticleCommentsRealApi() {
             // Given
 
             // When
-            List<ArticleDto> result = sut.getArticles();
+            List<ArticleCommentDto> result = sut.getArticleComments();
             // Then
             System.out.println(result.stream().findFirst());
             assertThat(result).isNotNull();
         }
 
-        @DisplayName("게시글 1개 호출 실제 API")
+        @DisplayName("댓글 1개 호출 실제 API")
         @Test
-        void callingArticleRealApi() {
+        void callingArticleCommentRealApi() {
             // Given
-            Long articleId = 1L;
+            Long articleCommentId = 1L;
             // When
-            ArticleDto result = sut.getArticle(articleId);
+            ArticleCommentDto result = sut.getArticleComment(articleCommentId);
             // Then
             System.out.println(result);
             assertThat(result).isNotNull();
         }
     }
 
-
     @DisplayName("API mocking 테스트")
     @EnableConfigurationProperties(ProjectProperties.class)
     @AutoConfigureWebClient(registerRestTemplate = true)
-    @RestClientTest(ArticleManagementService.class)
+    @RestClientTest(ArticleCommentManagementService.class)
     @Nested
     class restTemplateTest {
-        private final ArticleManagementService sut;
+        private final ArticleCommentManagementService sut;
         private final ProjectProperties projectProperties;
         private final MockRestServiceServer server;
         private final ObjectMapper mapper;
 
         @Autowired
         public restTemplateTest(
-                ArticleManagementService sut,
+                ArticleCommentManagementService sut,
                 ProjectProperties projectProperties,
                 MockRestServiceServer server,
                 ObjectMapper mapper
@@ -96,74 +95,72 @@ class ArticleManagementServiceTest {
             this.mapper = mapper;
         }
 
-        @DisplayName("게시글 목록 호출 API")
+        @DisplayName("댓글 목록 호출 API")
         @Test
-        void callingArticlesApi() throws JsonProcessingException {
+        void callingArticleCommentsApi() throws JsonProcessingException {
             // Given
-            ArticleDto expectedArticle = createArticleDto("제목", "글");
-            ArticleClientResponse expectedResponse = ArticleClientResponse.of(List.of(expectedArticle));
+            ArticleCommentDto expectedArticleComment = createArticleCommentDto("content");
+            ArticleCommentClientResponse expectedResponse = ArticleCommentClientResponse.of(List.of(expectedArticleComment));
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/articles?size=10000"))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments?size=10000"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedResponse),
                             MediaType.APPLICATION_JSON
                     ));
             // When
-            List<ArticleDto> result = sut.getArticles();
+            List<ArticleCommentDto> result = sut.getArticleComments();
             // Then
             assertThat(result).first()
-                    .hasFieldOrPropertyWithValue("id", expectedArticle.id())
-                    .hasFieldOrPropertyWithValue("title", expectedArticle.title())
-                    .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticle.userAccount().nickname());
+                    .hasFieldOrPropertyWithValue("id", expectedArticleComment.id())
+                    .hasFieldOrPropertyWithValue("content", expectedArticleComment.content())
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticleComment.userAccount().nickname());
             server.verify();
         }
 
-        @DisplayName("게시글 호출 API")
+        @DisplayName("댓글 호출 API")
         @Test
         void callingArticleApi() throws JsonProcessingException {
             // Given
-            Long articleId = 1L;
-            ArticleDto expectedArticle = createArticleDto("제목", "글");
+            Long articleCommentId = 1L;
+            ArticleCommentDto expectedArticleComment = createArticleCommentDto("content");
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId + "?projection=withUserAccount"))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleCommentId + "?projection=withUserAccount"))
                     .andRespond(withSuccess(
-                            mapper.writeValueAsString(expectedArticle),
+                            mapper.writeValueAsString(expectedArticleComment),
                             MediaType.APPLICATION_JSON
                     ));
             // When
-            ArticleDto result = sut.getArticle(articleId);
+            ArticleCommentDto result = sut.getArticleComment(articleCommentId);
             // Then
             assertThat(result)
-                    .hasFieldOrPropertyWithValue("id", expectedArticle.id())
-                    .hasFieldOrPropertyWithValue("title", expectedArticle.title())
-                    .hasFieldOrPropertyWithValue("content", expectedArticle.content())
-                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticle.userAccount().nickname());
+                    .hasFieldOrPropertyWithValue("id", expectedArticleComment.id())
+                    .hasFieldOrPropertyWithValue("content", expectedArticleComment.content())
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticleComment.userAccount().nickname());
             server.verify();
         }
 
-        @DisplayName("게시글 삭제 API")
+        @DisplayName("댓글 삭제 API")
         @Test
         void deleteArticleApi() {
             // Given
-            long articleId = 1L;
+            long articleCommentId = 1L;
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId + "/delete"))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleCommentId + "/delete"))
                     .andExpect(method(HttpMethod.DELETE))
                     .andRespond(withSuccess());
             // When
-            sut.deleteArticle(articleId);
+            sut.deleteArticleComment(articleCommentId);
             // Then
             server.verify();
         }
 
-        private ArticleDto createArticleDto(String title, String content) {
-            return ArticleDto.of(
+        private ArticleCommentDto createArticleCommentDto(String content) {
+            return ArticleCommentDto.of(
+                    1L,
                     1L,
                     createUserAccountDto(),
-                    title,
-                    content,
                     null,
+                    content,
                     LocalDateTime.now(),
                     "Uno",
                     LocalDateTime.now(),

@@ -1,7 +1,6 @@
 package com.spring.projectboardadmin.controller;
 
-import com.spring.projectboardadmin.config.SecurityConfig;
-import com.spring.projectboardadmin.domain.constant.RoleType;
+import com.spring.projectboardadmin.config.TestSecurityConfig;
 import com.spring.projectboardadmin.dto.ArticleDto;
 import com.spring.projectboardadmin.dto.UserAccountDto;
 import com.spring.projectboardadmin.service.ArticleManagementService;
@@ -12,20 +11,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("컨트롤러 - 게시글 관리")
-@Import(SecurityConfig.class)
+@Import(TestSecurityConfig.class)
 @WebMvcTest(ArticleManagementController.class)
 class ArticleManagementControllerTest {
     private final MockMvc mvc;
@@ -35,6 +34,7 @@ class ArticleManagementControllerTest {
         this.mvc = mvc;
     }
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[view][GET] 게시글 관리 페이지 - 정상 호출")
     @Test
     void requestArticleManagementView() throws Exception {
@@ -49,28 +49,27 @@ class ArticleManagementControllerTest {
         then(articleManagementService).should().getArticles();
     }
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[data][GET] 게시글 1개 - 정상 호출")
     @Test
     void requestArticle() throws Exception {
         // Given
-        int articleIndex = 0;
-        int pageNumber = 0;
-        Long articleId = 77L;
+        Long articleId = 1L;
         ArticleDto articleDto = createArticleDto("title", "content");
-        given(articleManagementService.getArticle(articleIndex, pageNumber)).willReturn(articleDto);
+        given(articleManagementService.getArticle(articleId)).willReturn(articleDto);
         // When & Then
-        mvc.perform(get("/management/articles/detail?articleIndex=" + articleIndex + "&page=" + pageNumber))
+        mvc.perform(get("/management/articles/" + articleId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(view().name("management/articles/detail?articleIndex=" + articleIndex + "&page=" + pageNumber))
                 .andExpect(jsonPath("$.id").value(articleId))
                 .andExpect(jsonPath("$.title").value(articleDto.title()))
                 .andExpect(jsonPath("$.content").value(articleDto.content()))
                 .andExpect(jsonPath("$.userAccount.nickname").value(articleDto.userAccount().nickname()));
-        then(articleManagementService).should().getArticle(articleIndex, pageNumber);
+        then(articleManagementService).should().getArticle(articleId);
     }
 
-    @DisplayName("[view][GET] 게시글 삭제 - 정상 호출")
+    @WithMockUser(username = "tester", roles = "MANAGER")
+    @DisplayName("[view][POST] 게시글 삭제 - 정상 호출")
     @Test
     void deleteArticle() throws Exception {
         // Given
@@ -104,8 +103,6 @@ class ArticleManagementControllerTest {
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
                 "unoTest",
-                "pw",
-                Set.of(RoleType.ADMIN),
                 "uno-test@email.com",
                 "uno-test",
                 "test memo"

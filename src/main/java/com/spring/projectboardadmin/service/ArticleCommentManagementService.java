@@ -1,8 +1,8 @@
 package com.spring.projectboardadmin.service;
 
-import com.spring.projectboardadmin.dto.ArticleDto;
+import com.spring.projectboardadmin.dto.ArticleCommentDto;
 import com.spring.projectboardadmin.dto.properties.ProjectProperties;
-import com.spring.projectboardadmin.dto.response.ArticleClientResponse;
+import com.spring.projectboardadmin.dto.response.ArticleCommentClientResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,45 +15,45 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class ArticleManagementService {
+public class ArticleCommentManagementService {
     private final RestTemplate restTemplate;
     private final ProjectProperties projectProperties;
 
-    public List<ArticleDto> getArticles() {
+    public List<ArticleCommentDto> getArticleComments() {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(
                         projectProperties.board().url()
-                                + "/api/articles"
+                                + "/api/articleComments"
                 )
                 .queryParam("size", 10000)
                 .build()
                 .toUri();
-        ArticleClientResponse response = restTemplate.getForObject(uri, ArticleClientResponse.class);
+        ArticleCommentClientResponse response = restTemplate.getForObject(uri, ArticleCommentClientResponse.class);
 
         return Optional.ofNullable(response)
-                .orElseGet(ArticleClientResponse::empty).articles();
+                .orElseGet(ArticleCommentClientResponse::empty).articleComments();
     }
-    public ArticleDto getArticle(Long articleId) {
-        URI uri = UriComponentsBuilder.fromHttpUrl(
-                projectProperties.board().url()
-                        + "/api/articles/"
-                        + articleId
+    public ArticleCommentDto getArticleComment(Long articleCommentId) {
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl(
+                        projectProperties.board().url()
+                                + "/api/articleComments/"
+                                + articleCommentId
                 )
                 .queryParam("projection", "withUserAccount")
                 .build()
                 .toUri();
-        ArticleDto response = restTemplate.getForObject(uri, ArticleDto.class);
+        ArticleCommentDto response = restTemplate.getForObject(uri, ArticleCommentDto.class);
 
         return Optional.ofNullable(response)
-                .orElseThrow(() -> new NoSuchElementException("게시글이 없습니다 - articleId: " + articleId));
+                .orElseThrow(() -> new NoSuchElementException("댓글이 없습니다 - articleCommentId: " + articleCommentId));
     }
-
-    public void deleteArticle(Long articleId) {
+    public void deleteArticleComment(Long articleCommentId) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(
                         projectProperties.board().url()
-                                + "/api/articles/"
-                                + articleId
+                                + "/api/articleComments/"
+                                + articleCommentId
                                 + "/delete"
                 )
                 .build()
