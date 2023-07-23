@@ -40,12 +40,13 @@ public class ArticleCommentManagementService {
                                 + "/api/articleComments/"
                                 + articleCommentId
                 )
+                .queryParam("projection", "withUserAccount")
                 .build()
                 .toUri();
         ArticleCommentDto response = restTemplate.getForObject(uri, ArticleCommentDto.class);
 
         return Optional.ofNullable(response)
-                .orElseThrow(() -> new NoSuchElementException("댓긇이 없습니다 - articleCommentId: " + articleCommentId));
+                .orElseThrow(() -> new NoSuchElementException("댓글이 없습니다 - articleCommentId: " + articleCommentId));
     }
     public void deleteArticleComment(Long articleCommentId) {
         URI uri = UriComponentsBuilder

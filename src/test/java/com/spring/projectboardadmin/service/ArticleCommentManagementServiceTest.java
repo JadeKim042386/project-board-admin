@@ -57,6 +57,18 @@ class ArticleCommentManagementServiceTest {
             System.out.println(result.stream().findFirst());
             assertThat(result).isNotNull();
         }
+
+        @DisplayName("댓글 1개 호출 실제 API")
+        @Test
+        void callingArticleCommentRealApi() {
+            // Given
+            Long articleCommentId = 1L;
+            // When
+            ArticleCommentDto result = sut.getArticleComment(articleCommentId);
+            // Then
+            System.out.println(result);
+            assertThat(result).isNotNull();
+        }
     }
 
     @DisplayName("API mocking 테스트")
@@ -112,7 +124,7 @@ class ArticleCommentManagementServiceTest {
             Long articleCommentId = 1L;
             ArticleCommentDto expectedArticleComment = createArticleCommentDto("content");
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleCommentId))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleCommentId + "?projection=withUserAccount"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedArticleComment),
                             MediaType.APPLICATION_JSON

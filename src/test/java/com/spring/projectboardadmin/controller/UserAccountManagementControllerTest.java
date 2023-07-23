@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@DisplayName("View 컨트롤러 - 회원 관리")
+@DisplayName("컨트롤러 - 회원 관리")
 @Import(TestSecurityConfig.class)
 @WebMvcTest(UserAccountManagementController.class)
 class UserAccountManagementControllerTest {
@@ -34,6 +35,7 @@ class UserAccountManagementControllerTest {
         this.mvc = mvc;
     }
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[view][GET] 회원 관리 페이지 - 정상 호출")
     @Test
     void requestUserAccountManagementView() throws Exception {
@@ -48,6 +50,7 @@ class UserAccountManagementControllerTest {
         then(userAccountManagementService).should().getUserAccounts();
     }
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[data][GET] 회원 1명 - 정상 호출")
     @Test
     void requestUserAccount() throws Exception {
@@ -64,6 +67,7 @@ class UserAccountManagementControllerTest {
         then(userAccountManagementService).should().getUserAccount(userId);
     }
 
+    @WithMockUser(username = "tester", roles = "MANAGER")
     @DisplayName("[view][POST] 회원 삭제 - 정상 호출")
     @Test
     void deleteUserAccount() throws Exception {
@@ -78,7 +82,7 @@ class UserAccountManagementControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/management/user-accounts"))
                 .andExpect(redirectedUrl("/management/user-accounts"));
-        then(userAccountManagementService).should().getUserAccount(userId);
+        then(userAccountManagementService).should().deleteUserAccount(userId);
     }
 
 

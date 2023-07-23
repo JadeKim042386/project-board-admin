@@ -34,7 +34,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @DisplayName("비지니스 로직 - 게시글 관리")
 class ArticleManagementServiceTest {
 
-//    @Disabled("실제 API 호출 결과 확인용")
+    @Disabled("실제 API 호출 결과 확인용")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
@@ -126,7 +126,7 @@ class ArticleManagementServiceTest {
             Long articleId = 1L;
             ArticleDto expectedArticle = createArticleDto("제목", "글");
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId + "?projection=withUserAccount"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedArticle),
                             MediaType.APPLICATION_JSON
