@@ -34,7 +34,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @DisplayName("비지니스 로직 - 게시글 관리")
 class ArticleManagementServiceTest {
 
-    @Disabled("실제 API 호출 결과 확인용")
+//    @Disabled("실제 API 호출 결과 확인용")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
@@ -55,6 +55,18 @@ class ArticleManagementServiceTest {
             List<ArticleDto> result = sut.getArticles();
             // Then
             System.out.println(result.stream().findFirst());
+            assertThat(result).isNotNull();
+        }
+
+        @DisplayName("게시글 1개 호출 실제 API")
+        @Test
+        void callingArticleRealApi() {
+            // Given
+            Long articleId = 1L;
+            // When
+            ArticleDto result = sut.getArticle(articleId);
+            // Then
+            System.out.println(result);
             assertThat(result).isNotNull();
         }
     }
@@ -111,17 +123,16 @@ class ArticleManagementServiceTest {
         @Test
         void callingArticleApi() throws JsonProcessingException {
             // Given
-            int articleIndex = 0;
-            int pageNumber = 0;
+            Long articleId = 1L;
             ArticleDto expectedArticle = createArticleDto("제목", "글");
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/articles/detail?articleIndex=" + articleIndex + "&page=" + pageNumber))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articles/" + articleId))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedArticle),
                             MediaType.APPLICATION_JSON
                     ));
             // When
-            ArticleDto result = sut.getArticle(articleIndex, pageNumber);
+            ArticleDto result = sut.getArticle(articleId);
             // Then
             assertThat(result)
                     .hasFieldOrPropertyWithValue("id", expectedArticle.id())
