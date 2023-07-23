@@ -67,7 +67,7 @@ class AdminAccountControllerTest {
         // Given
         given(adminAccountService.users()).willReturn(List.of());
         // When
-        mvc.perform(get("/api/admin/memebers"))
+        mvc.perform(get("/api/admin/members"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
         // Then
@@ -83,7 +83,7 @@ class AdminAccountControllerTest {
         willDoNothing().given(adminAccountService).deleteUser(username);
         // When
         mvc.perform(
-                delete("/api/admin/memebers/" + username)
+                delete("/api/admin/members/" + username + "/delete")
                         .with(csrf())
         )
                 .andExpect(status().isNoContent());
