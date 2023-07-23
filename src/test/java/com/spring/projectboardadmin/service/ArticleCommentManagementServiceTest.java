@@ -90,7 +90,7 @@ class ArticleCommentManagementServiceTest {
             ArticleCommentDto expectedArticleComment = createArticleCommentDto("content");
             ArticleCommentClientResponse expectedResponse = ArticleCommentClientResponse.of(List.of(expectedArticleComment));
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/comments?size=10000"))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments?size=10000"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedResponse),
                             MediaType.APPLICATION_JSON
@@ -101,7 +101,7 @@ class ArticleCommentManagementServiceTest {
             assertThat(result).first()
                     .hasFieldOrPropertyWithValue("id", expectedArticleComment.id())
                     .hasFieldOrPropertyWithValue("content", expectedArticleComment.content())
-                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticleComment.userAccountDto().nickname());
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticleComment.userAccount().nickname());
             server.verify();
         }
 
@@ -112,7 +112,7 @@ class ArticleCommentManagementServiceTest {
             Long articleCommentId = 1L;
             ArticleCommentDto expectedArticleComment = createArticleCommentDto("content");
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/comments/" + articleCommentId))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleCommentId))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedArticleComment),
                             MediaType.APPLICATION_JSON
@@ -123,7 +123,7 @@ class ArticleCommentManagementServiceTest {
             assertThat(result)
                     .hasFieldOrPropertyWithValue("id", expectedArticleComment.id())
                     .hasFieldOrPropertyWithValue("content", expectedArticleComment.content())
-                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticleComment.userAccountDto().nickname());
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticleComment.userAccount().nickname());
             server.verify();
         }
 
@@ -133,7 +133,7 @@ class ArticleCommentManagementServiceTest {
             // Given
             long articleCommentId = 1L;
             server
-                    .expect(requestTo(projectProperties.board().url() + "/api/comments/" + articleCommentId + "/delete"))
+                    .expect(requestTo(projectProperties.board().url() + "/api/articleComments/" + articleCommentId + "/delete"))
                     .andExpect(method(HttpMethod.DELETE))
                     .andRespond(withSuccess());
             // When
