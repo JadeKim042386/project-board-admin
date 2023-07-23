@@ -39,6 +39,7 @@ public class ArticleManagementService {
                         + "/api/articles/"
                         + articleId
                 )
+                .queryParam("projection", "withUserAccount")
                 .build()
                 .toUri();
         ArticleDto response = restTemplate.getForObject(uri, ArticleDto.class);
