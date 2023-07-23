@@ -1,6 +1,5 @@
 package com.spring.projectboardadmin.controller;
 
-import com.spring.projectboardadmin.config.SecurityConfig;
 import com.spring.projectboardadmin.config.TestSecurityConfig;
 import com.spring.projectboardadmin.dto.ArticleCommentDto;
 import com.spring.projectboardadmin.dto.UserAccountDto;
@@ -12,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -34,6 +34,7 @@ class ArticleCommentManagementControllerTest {
         this.mvc = mvc;
     }
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[view][GET] 댓글 관리 페이지 - 정상 호출")
     @Test
     void requestArticleCommentManagementView() throws Exception {
@@ -48,6 +49,7 @@ class ArticleCommentManagementControllerTest {
         then(articleCommentManagementService).should().getArticleComments();
     }
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[data][GET] 댓글 1개 - 정상 호출")
     @Test
     void requestArticleComment() throws Exception {
@@ -61,10 +63,11 @@ class ArticleCommentManagementControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(articleCommentId))
                 .andExpect(jsonPath("$.content").value(articleCommentDto.content()))
-                .andExpect(jsonPath("$.userAccount.nickname").value(articleCommentDto.userAccountDto().nickname()));
+                .andExpect(jsonPath("$.userAccount.nickname").value(articleCommentDto.userAccount().nickname()));
         then(articleCommentManagementService).should().getArticleComment(articleCommentId);
     }
 
+    @WithMockUser(username = "tester", roles = "MANAGER")
     @DisplayName("[view][POST] 댓글 삭제 - 정상 호출")
     @Test
     void deleteArticleComment() throws Exception {
