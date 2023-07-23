@@ -45,7 +45,7 @@ class UserAccountManagementServiceTest {
             this.sut = sut;
         }
 
-        @DisplayName("댓글 목록 호출 실제 API")
+        @DisplayName("회원 목록 호출 실제 API")
         @Test
         void callingUserAccountsRealApi() {
             // Given

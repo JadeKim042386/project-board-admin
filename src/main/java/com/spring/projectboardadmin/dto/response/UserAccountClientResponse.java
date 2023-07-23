@@ -26,7 +26,7 @@ public record UserAccountClientResponse(
         );
     }
 
-    public List<UserAccountDto> articles() {
+    public List<UserAccountDto> userAccounts() {
         return this.embedded().userAccounts();
     }
 
