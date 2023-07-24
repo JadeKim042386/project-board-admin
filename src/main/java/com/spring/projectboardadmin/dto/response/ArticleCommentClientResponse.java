@@ -35,5 +35,4 @@ public record ArticleCommentClientResponse(
             int totalPages,
             int number
     ) {}
-    
 }

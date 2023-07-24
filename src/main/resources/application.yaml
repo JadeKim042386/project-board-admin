@@ -5,7 +5,7 @@ server.port: 8081
 
 logging:
   level:
-    com.spring.projectboard: debug
+    com.spring.projectboardadmin: debug
     org.springframework.web.servlet: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
     org.springframework.web.client.RestTemplate: debug
@@ -24,7 +24,7 @@ spring:
     properties:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 100
-  h2.console.enabled: false # default=false
+  h2.console.enabled: false
   sql.init.mode: always
   data.rest:
     base-path: /api
@@ -47,7 +47,6 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
-springdoc.swagger-ui.path: /swagger-ui
 project.board.url: http://localhost:8080
 
 ---

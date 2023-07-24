@@ -26,6 +26,7 @@ public record ArticleResponse(
           dto.createdAt()
         );
     }
+
     public static ArticleResponse withoutContent(ArticleDto dto) {
         return ArticleResponse.of(
                 dto.id(),

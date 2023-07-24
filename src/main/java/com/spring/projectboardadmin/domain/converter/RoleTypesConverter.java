@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 @Converter
 public class RoleTypesConverter implements AttributeConverter<Set<RoleType>, String> {
     private static  final String DELIMITER = ",";
+
     @Override
     public String convertToDatabaseColumn(Set<RoleType> attribute) {
         return attribute.stream().map(RoleType::name).sorted().collect(Collectors.joining(DELIMITER));

@@ -2,7 +2,6 @@ package com.spring.projectboardadmin.dto.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-
 @ConfigurationProperties("project")
 public record ProjectProperties(Board board) {
     /**
@@ -10,7 +9,5 @@ public record ProjectProperties(Board board) {
      *
      * @param url 게시판 서비스 호스트
      */
-    public record Board(String url) {
-
-    }
+    public record Board(String url) {}
 }

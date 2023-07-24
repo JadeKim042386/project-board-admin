@@ -1,7 +1,6 @@
 package com.spring.projectboardadmin.controller;
 
 import com.spring.projectboardadmin.config.GlobalControllerConfig;
-import com.spring.projectboardadmin.config.SecurityConfig;
 import com.spring.projectboardadmin.config.TestSecurityConfig;
 import com.spring.projectboardadmin.dto.UserAccountDto;
 import com.spring.projectboardadmin.service.UserAccountManagementService;
@@ -17,13 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 @DisplayName("컨트롤러 - 회원 관리")
 @Import({TestSecurityConfig.class, GlobalControllerConfig.class})
@@ -85,7 +82,6 @@ class UserAccountManagementControllerTest {
                 .andExpect(redirectedUrl("/management/user-accounts"));
         then(userAccountManagementService).should().deleteUserAccount(userId);
     }
-
 
     private UserAccountDto createUserAccountDto(String userId, String nickname) {
         return UserAccountDto.of(

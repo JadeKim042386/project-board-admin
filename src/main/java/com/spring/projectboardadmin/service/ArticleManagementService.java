@@ -33,6 +33,7 @@ public class ArticleManagementService {
         return Optional.ofNullable(response)
                 .orElseGet(ArticleClientResponse::empty).articles();
     }
+
     public ArticleDto getArticle(Long articleId) {
         URI uri = UriComponentsBuilder.fromHttpUrl(
                 projectProperties.board().url()

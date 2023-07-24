@@ -17,16 +17,19 @@ import java.util.Set;
 @Service
 public class AdminAccountService {
     private final AdminAccountRepository adminAccountRepository;
+
     @Transactional(readOnly = true)
     public List<AdminAccountDto> users() {
         return adminAccountRepository.findAll().stream()
                 .map(AdminAccountDto::from).toList();
     }
+
     @Transactional(readOnly = true)
     public Optional<AdminAccountDto> searchUser(String username) {
         return adminAccountRepository.findById(username)
                 .map(AdminAccountDto::from);
     }
+
     public AdminAccountDto saveUser(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo) {
         return AdminAccountDto.from(
                 adminAccountRepository.save(
@@ -42,6 +45,7 @@ public class AdminAccountService {
                 )
         );
     }
+
     public void deleteUser(String username) {
         adminAccountRepository.deleteById(username);
     }

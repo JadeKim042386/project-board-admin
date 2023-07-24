@@ -15,6 +15,7 @@ public record UserAccountResponse(
     public static UserAccountResponse of(String userId, String email, String nickname, String memo, LocalDateTime createdAt, String createdBy) {
         return new UserAccountResponse(userId, email, nickname, memo, createdAt, createdBy);
     }
+
     public static UserAccountResponse of(UserAccountDto dto) {
         return new UserAccountResponse(dto.userId(), dto.email(), dto.nickname(), dto.memo(), dto.createdAt(), dto.createdBy());
     }

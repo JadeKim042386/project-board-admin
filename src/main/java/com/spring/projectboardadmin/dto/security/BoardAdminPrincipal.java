@@ -2,7 +2,6 @@ package com.spring.projectboardadmin.dto.security;
 
 import com.spring.projectboardadmin.domain.constant.RoleType;
 import com.spring.projectboardadmin.dto.AdminAccountDto;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +21,6 @@ public record BoardAdminPrincipal(
         String memo,
         Map<String, Object> oAuth2Attributes
         ) implements UserDetails, OAuth2User {
-
     public static BoardAdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo) {
         return BoardAdminPrincipal.of(username, password, roleTypes, email, nickname, memo, Map.of());
     }
@@ -65,10 +63,8 @@ public record BoardAdminPrincipal(
     public Map<String, Object> getAttributes() {
         return oAuth2Attributes;
     }
-
     @Override
     public String getName() { return username; }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

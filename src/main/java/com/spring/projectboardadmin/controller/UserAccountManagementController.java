@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserAccountManagementController {
     private final UserAccountManagementService userAccountManagementService;
+
     @GetMapping
     public String userAccounts(
             @PageableDefault(size=10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
@@ -41,5 +42,4 @@ public class UserAccountManagementController {
 
         return "redirect:/management/user-accounts";
     }
-
 }
