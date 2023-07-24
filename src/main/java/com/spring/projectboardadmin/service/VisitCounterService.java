@@ -17,7 +17,7 @@ public class VisitCounterService {
             "/management/articles",
             "/management/article-comments",
             "/management/user-accounts",
-            "admin/members"
+            "/admin/members"
     );
 
     public long visitCount() {
