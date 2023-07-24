@@ -1,5 +1,6 @@
 package com.spring.projectboardadmin.controller;
 
+import com.spring.projectboardadmin.config.GlobalControllerConfig;
 import com.spring.projectboardadmin.config.SecurityConfig;
 import com.spring.projectboardadmin.config.TestSecurityConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("루트 컨트롤러")
-@Import(TestSecurityConfig.class)
+@Import({TestSecurityConfig.class, GlobalControllerConfig.class})
 @WebMvcTest(MainController.class)
 class MainControllerTest {
     private final MockMvc mvc;
