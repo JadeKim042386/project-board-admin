@@ -33,6 +33,7 @@ public class ArticleCommentManagementService {
         return Optional.ofNullable(response)
                 .orElseGet(ArticleCommentClientResponse::empty).articleComments();
     }
+
     public ArticleCommentDto getArticleComment(Long articleCommentId) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(
@@ -48,6 +49,7 @@ public class ArticleCommentManagementService {
         return Optional.ofNullable(response)
                 .orElseThrow(() -> new NoSuchElementException("댓글이 없습니다 - articleCommentId: " + articleCommentId));
     }
+
     public void deleteArticleComment(Long articleCommentId) {
         URI uri = UriComponentsBuilder
                 .fromHttpUrl(

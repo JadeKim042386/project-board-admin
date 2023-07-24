@@ -18,6 +18,7 @@ public record AdminAccountResponse(
     public static AdminAccountResponse of(String userId, String roleTypes, String email, String nickname, String memo, LocalDateTime createdAt, String createdBy) {
         return new AdminAccountResponse(userId, roleTypes, email, nickname, memo, createdAt, createdBy);
     }
+
     public static AdminAccountResponse from(AdminAccountDto dto) {
         return  AdminAccountResponse.of(
                 dto.userId(),

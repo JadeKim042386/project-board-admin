@@ -71,7 +71,6 @@ class ArticleManagementServiceTest {
         }
     }
 
-
     @DisplayName("API mocking 테스트")
     @EnableConfigurationProperties(ProjectProperties.class)
     @AutoConfigureWebClient(registerRestTemplate = true)

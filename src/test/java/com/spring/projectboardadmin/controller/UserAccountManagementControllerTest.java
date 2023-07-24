@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @DisplayName("컨트롤러 - 회원 관리")
 @Import({TestSecurityConfig.class, GlobalControllerConfig.class})
 @WebMvcTest(UserAccountManagementController.class)
@@ -85,7 +84,6 @@ class UserAccountManagementControllerTest {
                 .andExpect(redirectedUrl("/management/user-accounts"));
         then(userAccountManagementService).should().deleteUserAccount(userId);
     }
-
 
     private UserAccountDto createUserAccountDto(String userId, String nickname) {
         return UserAccountDto.of(

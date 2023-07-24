@@ -36,5 +36,4 @@ public class AdminAccountController {
     public void deleteMember(@PathVariable String userId) {
         adminAccountService.deleteUser(userId);
     }
-
 }
