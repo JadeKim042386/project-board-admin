@@ -23,10 +23,7 @@
 
 - 그 외
   - AdminLTE 3.2
-  - webjars-locator-core
-  - sockjs-client
   - stomp-websocket
-  - CloudType
 
 ## Reference
 - [게시판 서비스](https://github.com/JadeKim042386/project-board)
