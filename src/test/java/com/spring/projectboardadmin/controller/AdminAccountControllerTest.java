@@ -1,5 +1,6 @@
 package com.spring.projectboardadmin.controller;
 
+import com.spring.projectboardadmin.config.GlobalControllerConfig;
 import com.spring.projectboardadmin.config.SecurityConfig;
 import com.spring.projectboardadmin.domain.constant.RoleType;
 import com.spring.projectboardadmin.dto.AdminAccountDto;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("컨트롤러 - 게시글 관리")
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, GlobalControllerConfig.class})
 @WebMvcTest(AdminAccountController.class)
 class AdminAccountControllerTest {
     private final MockMvc mvc;
