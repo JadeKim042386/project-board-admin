@@ -21,7 +21,7 @@
 
         <attr sel="tbody" th:remove="all-but-first">
             <attr sel="tr[0]" th:each="userAccount : ${userAccounts}">
-                <attr sel="td[0]/a" th:text="${userAccount.userId}" th:href="@{#}" th:data-id="${userAccount.userId}" />
+                <attr sel="td[0]/a" th:text="${userAccount.userId}" th:href="@{#}" th:data-id="${userAccount.userId}" th:classappend="text-dark" />
                 <attr sel="td[1]" th:text="${userAccount.nickname}" />
                 <attr sel="td[2]" th:text="${userAccount.email}" />
                 <attr sel="td[3]" th:text="${userAccount.memo}" />
