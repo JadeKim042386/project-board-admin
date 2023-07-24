@@ -2,10 +2,8 @@ package com.spring.projectboardadmin.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.projectboardadmin.dto.ArticleCommentDto;
 import com.spring.projectboardadmin.dto.UserAccountDto;
 import com.spring.projectboardadmin.dto.properties.ProjectProperties;
-import com.spring.projectboardadmin.dto.response.ArticleCommentClientResponse;
 import com.spring.projectboardadmin.dto.response.UserAccountClientResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.client.MockRestServiceServer;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

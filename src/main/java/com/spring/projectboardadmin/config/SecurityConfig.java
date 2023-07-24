@@ -1,6 +1,5 @@
 package com.spring.projectboardadmin.config;
 
-import com.spring.projectboardadmin.domain.AdminAccount;
 import com.spring.projectboardadmin.domain.constant.RoleType;
 import com.spring.projectboardadmin.dto.security.BoardAdminPrincipal;
 import com.spring.projectboardadmin.dto.security.KakaoOauth2Response;

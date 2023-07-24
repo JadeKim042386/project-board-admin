@@ -1,7 +1,6 @@
 package com.spring.projectboardadmin.controller;
 
 import com.spring.projectboardadmin.config.GlobalControllerConfig;
-import com.spring.projectboardadmin.config.SecurityConfig;
 import com.spring.projectboardadmin.config.TestSecurityConfig;
 import com.spring.projectboardadmin.dto.UserAccountDto;
 import com.spring.projectboardadmin.service.UserAccountManagementService;
@@ -17,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

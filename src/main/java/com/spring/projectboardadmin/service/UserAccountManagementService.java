@@ -1,9 +1,7 @@
 package com.spring.projectboardadmin.service;
 
-import com.spring.projectboardadmin.dto.ArticleCommentDto;
 import com.spring.projectboardadmin.dto.UserAccountDto;
 import com.spring.projectboardadmin.dto.properties.ProjectProperties;
-import com.spring.projectboardadmin.dto.response.ArticleCommentClientResponse;
 import com.spring.projectboardadmin.dto.response.UserAccountClientResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

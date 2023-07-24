@@ -1,11 +1,8 @@
 package com.spring.projectboardadmin.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.spring.projectboardadmin.dto.ArticleDto;
 import com.spring.projectboardadmin.dto.UserAccountDto;
-import org.springframework.data.domain.Page;
 
-import javax.persistence.Embedded;
 import java.util.List;
 
 public record UserAccountClientResponse(

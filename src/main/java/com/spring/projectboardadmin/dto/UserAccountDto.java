@@ -1,10 +1,6 @@
 package com.spring.projectboardadmin.dto;
 
-import com.spring.projectboardadmin.domain.AdminAccount;
-import com.spring.projectboardadmin.domain.constant.RoleType;
-
 import java.time.LocalDateTime;
-import java.util.Set;
 
 public record UserAccountDto(
         String userId,

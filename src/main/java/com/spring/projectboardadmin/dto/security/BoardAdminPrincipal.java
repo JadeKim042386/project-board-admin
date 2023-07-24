@@ -2,7 +2,6 @@ package com.spring.projectboardadmin.dto.security;
 
 import com.spring.projectboardadmin.domain.constant.RoleType;
 import com.spring.projectboardadmin.dto.AdminAccountDto;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

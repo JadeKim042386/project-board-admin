@@ -1,7 +1,6 @@
 package com.spring.projectboardadmin.controller;
 
 import com.spring.projectboardadmin.config.GlobalControllerConfig;
-import com.spring.projectboardadmin.config.SecurityConfig;
 import com.spring.projectboardadmin.config.TestSecurityConfig;
 import com.spring.projectboardadmin.dto.ArticleDto;
 import com.spring.projectboardadmin.dto.UserAccountDto;
